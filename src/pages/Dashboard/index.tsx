@@ -66,8 +66,10 @@ export const Dashboard = () => {
 
                       </div>
                       <div>
+                          {/* TODO: Need to work on this layout */}
                           <Button
                               size="sm"
+                              variant="destructive"
                               // className="gap-2"
                               onClick={() => removeDevice(device.id)}
                           >
