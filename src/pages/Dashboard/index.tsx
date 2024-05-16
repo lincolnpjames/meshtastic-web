@@ -16,9 +16,9 @@ import { useMemo } from "react";
 
 export const Dashboard = () => {
   const { setConnectDialogOpen } = useAppStore();
-  const { getDevices } = useDeviceStore();
+  const { getDevices, removeDevice } = useDeviceStore();
 
-  const devices = useMemo(() => getDevices(), [getDevices]);
+  // const devices = useMemo(() => getDevices(), [getDevices]);
 
   return (
     <div className="flex flex-col gap-3 p-3">
@@ -32,9 +32,9 @@ export const Dashboard = () => {
       <Separator />
 
       <div className="flex h-[450px] rounded-md border border-dashed border-slate-200 p-3 dark:border-slate-700">
-        {devices.length ? (
+        {getDevices().length ? (
           <ul className="grow divide-y divide-gray-200">
-            {devices.map((device) => {
+            {getDevices().map((device) => {
               return (
                 <li key={device.id}>
                   <div className="px-4 py-4 sm:px-6">
@@ -43,6 +43,7 @@ export const Dashboard = () => {
                         {device.nodes.get(device.hardware.myNodeNum)?.user
                           ?.longName ?? "UNK"}
                       </p>
+                        <div>
                       <div className="inline-flex w-24 justify-center gap-2 rounded-full bg-slate-100 py-1 text-xs font-semibold text-slate-900 transition-colors hover:bg-slate-700 hover:text-slate-50">
                         {device.connection?.connType === "ble" && (
                           <>
@@ -62,7 +63,18 @@ export const Dashboard = () => {
                             Network
                           </>
                         )}
+
                       </div>
+                      <div>
+                          <Button
+                              size="sm"
+                              // className="gap-2"
+                              onClick={() => removeDevice(device.id)}
+                          >
+                              Remove
+                          </Button>
+                      </div>
+                    </div>
                     </div>
                     <div className="mt-2 sm:flex sm:justify-between">
                       <div className="flex gap-2 text-sm text-gray-500">
